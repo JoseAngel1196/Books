@@ -1,0 +1,4 @@
+/dist
+.env
+.sequelizerc
+node_modules
