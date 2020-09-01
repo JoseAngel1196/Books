@@ -13,7 +13,7 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
       },
       year: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.CHAR(4),
         allowNull: false,
       },
       book_description: {

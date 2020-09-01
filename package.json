@@ -8,7 +8,6 @@
     "start": "node dist/index",
     "start:dev": "cross-env NODE_ENV=development nodemon",
     "db:create:dev": "cross-env NODE_ENV=development node scripts/db/create",
-    "db:delete:dev": "cross-env NODE_ENV=development node scripts/db/delete",
     "migrate:dev": "npm run build && cross-env NODE_ENV=development dotenv -e .env sequelize db:migrate"
   },
   "keywords": [

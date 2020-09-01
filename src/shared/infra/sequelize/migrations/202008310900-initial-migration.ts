@@ -3,7 +3,7 @@ import runner from '../runner';
 export default {
   up: (queryInterface, Sequelize) => {
     const CREATE_BOOK = () => {
-      return queryInterface.create('books', {
+      return queryInterface.createTable('book', {
         book_id: {
           type: Sequelize.UUID,
           defaultValue: Sequelize.UUIDV4,
@@ -38,6 +38,6 @@ export default {
     return runner.run([() => CREATE_BOOK()]);
   },
   down: (queryInterface, Sequelize) => {
-    return runner.run([() => queryInterface.dropTable('books')]);
+    return runner.run([() => queryInterface.dropTable('book')]);
   },
 };
