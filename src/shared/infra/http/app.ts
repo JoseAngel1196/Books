@@ -5,6 +5,7 @@ import cors from 'cors';
 
 // App Imports
 import { v1Router } from './api/v1';
+import { startGraphQLServer } from './graphql/server';
 
 const origin = {
   origin: '*',
@@ -12,9 +13,12 @@ const origin = {
 
 const app = express();
 
+startGraphQLServer(app);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors(origin));
+
 
 app.use('/api/v1', v1Router);
 

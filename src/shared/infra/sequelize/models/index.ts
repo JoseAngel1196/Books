@@ -5,6 +5,7 @@ import * as Sequelize from 'sequelize';
 
 const sequelize = config.connection;
 
+// turns base_user => BaseUser
 function toCamelCase(str) {
   const _ = str.indexOf('_');
   if (~_) {
