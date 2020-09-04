@@ -4,6 +4,7 @@ import { UseCase } from '../../../../shared/core/UseCase';
 import { CreateBookDTO } from './CreateBookDTO';
 import { IBookRepo } from '../../repos/bookRepo';
 import { Book } from '../../domain/book';
+import { BookTitle } from '../../domain/bookTitle';
 
 type Response = Result<AppError.UnexpectedError> | Result<any>;
 
@@ -19,13 +20,21 @@ export class CreateBookUseCase
   }
 
   async execute(request: CreateBookDTO): Promise<Response> {
-    const { bookDescription, year, title } = request;
+    let title: BookTitle;
+
+    const titleOrError = BookTitle.create({ value: request.title });
+
+    if (titleOrError.isFailure) {
+      return Result.fail(titleOrError.error.toString());
+    }
 
     try {
+      title = titleOrError.getValue();
+
       const bookOrError: Result<Book> = Book.create({
-        bookDescription,
+        bookDescription: request.bookDescription,
         title,
-        year,
+        year: request.year,
       });
 
       if (bookOrError.isFailure) {

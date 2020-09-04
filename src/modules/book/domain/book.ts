@@ -3,9 +3,10 @@ import { UniqueEntityID } from '../../../shared/domain/UniqueEntityID';
 import { BookId } from './bookId';
 import { Result } from '../../../shared/core/Result';
 import { Guard } from '../../../shared/core/Guard';
+import { BookTitle } from './bookTitle';
 
 export interface BookProps {
-  title: string;
+  title: BookTitle;
   year: string;
   bookDescription: string;
 }
@@ -22,7 +23,7 @@ export class Book extends Entity<BookProps> {
     return BookId.create(this._id).getValue();
   }
 
-  get title(): string {
+  get title(): BookTitle {
     return this.props.title;
   }
 
