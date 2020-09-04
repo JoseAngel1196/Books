@@ -1,8 +1,13 @@
+// Imports
 import { ApolloServer } from 'apollo-server-express';
-import { typeDefs } from './book';
+
+// App Imports
+import { typeDefs } from './schema';
+import { resolvers } from './resolvers';
 
 const server = new ApolloServer({
   typeDefs: [typeDefs],
+  resolvers,
 });
 
 export function startGraphQLServer(app) {

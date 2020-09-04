@@ -46,7 +46,7 @@ export class Book extends Entity<BookProps> {
     } else {
       const book = new Book(props, id);
 
-      Result.ok<Book>(book);
+      return Result.ok<Book>(book);
     }
   }
 }

@@ -2,7 +2,7 @@ import { CreateBookUseCase } from './CreateBookUseCase';
 import { bookRepo } from '../../repos';
 import { CreateBookController } from './CreateBookController';
 
-const createBookUseCase = new CreateBookUseCase(bookRepo);
-const createBookController = new CreateBookController(createBookUseCase);
+const createBook = new CreateBookUseCase(bookRepo);
+const createBookController = new CreateBookController(createBook);
 
-export { createBookUseCase, createBookController };
+export { createBook, createBookController };
