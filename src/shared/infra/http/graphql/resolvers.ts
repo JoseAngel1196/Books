@@ -1,5 +1,10 @@
-import { CreateBookPayload } from '../../../../generated/graphql';
+import {
+  CreateBookPayload,
+  BookCollectionResult,
+} from '../../../../generated/graphql';
 import { createBook } from '../../../../modules/book/useCases/createBook';
+import { getBooks } from '../../../../modules/book/useCases/getBooks';
+import { BookMap } from '../../../../modules/book/mappers/bookMap';
 
 const resolvers = {
   Mutation: {
@@ -21,6 +26,18 @@ const resolvers = {
       return {
         success: true,
       };
+    },
+  },
+  Query: {
+    books: async (_, args, ___): Promise<BookCollectionResult[]> => {
+      const { offset } = args;
+      const response = await getBooks.execute({ offset });
+      if (response.isRight()) {
+        const books = response.value.getValue();
+        return books.map((b) => BookMap.toDTO(b));
+      } else {
+        throw response.value.error;
+      }
     },
   },
 };
