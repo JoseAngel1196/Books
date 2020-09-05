@@ -27,16 +27,27 @@ export type BookCollectionResult = {
 
 export type Query = {
   __typename?: 'Query';
-  getBooks?: Maybe<BookCollectionResult>;
+  books: Array<Maybe<BookCollectionResult>>;
 };
 
 
-export type QueryGetBooksArgs = {
-  offset: Scalars['String'];
+export type QueryBooksArgs = {
+  offset?: Maybe<Scalars['String']>;
 };
 
 export type CreateBookPayload = {
   __typename?: 'CreateBookPayload';
+  success: Scalars['Boolean'];
+  errorMessage?: Maybe<Scalars['String']>;
+};
+
+export type BookError = {
+  __typename?: 'BookError';
+  errorMessage: Scalars['String'];
+};
+
+export type UpdateBookPayload = {
+  __typename?: 'UpdateBookPayload';
   success: Scalars['Boolean'];
   errorMessage?: Maybe<Scalars['String']>;
 };
@@ -47,14 +58,27 @@ export type CreateBookInput = {
   bookDescription: Scalars['String'];
 };
 
+export type UpdateBookInput = {
+  bookId: Scalars['String'];
+  title: Scalars['String'];
+  year: Scalars['String'];
+  bookDescription: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createBook: CreateBookPayload;
+  updateBook: UpdateBookPayload;
 };
 
 
 export type MutationCreateBookArgs = {
   input?: Maybe<CreateBookInput>;
+};
+
+
+export type MutationUpdateBookArgs = {
+  input?: Maybe<UpdateBookInput>;
 };
 
 
@@ -141,7 +165,10 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   CreateBookPayload: ResolverTypeWrapper<CreateBookPayload>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  BookError: ResolverTypeWrapper<BookError>;
+  UpdateBookPayload: ResolverTypeWrapper<UpdateBookPayload>;
   CreateBookInput: CreateBookInput;
+  UpdateBookInput: UpdateBookInput;
   Mutation: ResolverTypeWrapper<{}>;
 };
 
@@ -153,7 +180,10 @@ export type ResolversParentTypes = {
   Query: {};
   CreateBookPayload: CreateBookPayload;
   Boolean: Scalars['Boolean'];
+  BookError: BookError;
+  UpdateBookPayload: UpdateBookPayload;
   CreateBookInput: CreateBookInput;
+  UpdateBookInput: UpdateBookInput;
   Mutation: {};
 };
 
@@ -172,7 +202,7 @@ export type BookCollectionResultResolvers<ContextType = any, ParentType extends 
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getBooks?: Resolver<Maybe<ResolversTypes['BookCollectionResult']>, ParentType, ContextType, RequireFields<QueryGetBooksArgs, 'offset'>>;
+  books?: Resolver<Array<Maybe<ResolversTypes['BookCollectionResult']>>, ParentType, ContextType, RequireFields<QueryBooksArgs, never>>;
 };
 
 export type CreateBookPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateBookPayload'] = ResolversParentTypes['CreateBookPayload']> = {
@@ -181,8 +211,20 @@ export type CreateBookPayloadResolvers<ContextType = any, ParentType extends Res
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type BookErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['BookError'] = ResolversParentTypes['BookError']> = {
+  errorMessage?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type UpdateBookPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['UpdateBookPayload'] = ResolversParentTypes['UpdateBookPayload']> = {
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  errorMessage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createBook?: Resolver<ResolversTypes['CreateBookPayload'], ParentType, ContextType, RequireFields<MutationCreateBookArgs, never>>;
+  updateBook?: Resolver<ResolversTypes['UpdateBookPayload'], ParentType, ContextType, RequireFields<MutationUpdateBookArgs, never>>;
 };
 
 export type Resolvers<ContextType = any> = {
@@ -190,6 +232,8 @@ export type Resolvers<ContextType = any> = {
   BookCollectionResult?: BookCollectionResultResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   CreateBookPayload?: CreateBookPayloadResolvers<ContextType>;
+  BookError?: BookErrorResolvers<ContextType>;
+  UpdateBookPayload?: UpdateBookPayloadResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
 };
 

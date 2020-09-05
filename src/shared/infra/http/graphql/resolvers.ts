@@ -1,10 +1,13 @@
 import {
   CreateBookPayload,
   BookCollectionResult,
+  UpdateBookPayload,
 } from '../../../../generated/graphql';
 import { createBook } from '../../../../modules/book/useCases/createBook';
 import { getBooks } from '../../../../modules/book/useCases/getBooks';
 import { BookMap } from '../../../../modules/book/mappers/bookMap';
+import { UpdateBookDTO } from '../../../../modules/book/useCases/updateBook/UpdateBookDTO';
+import { updateBook } from '../../../../modules/book/useCases/updateBook';
 
 const resolvers = {
   Mutation: {
@@ -27,6 +30,32 @@ const resolvers = {
         success: true,
       };
     },
+    updateBook: async (_, args, ___): Promise<UpdateBookPayload> => {
+      const {
+        bookDescription,
+        bookId,
+        title,
+        year,
+      } = args.input as UpdateBookDTO;
+
+      const response = await updateBook.execute({
+        bookDescription,
+        bookId,
+        title,
+        year,
+      });
+
+      if (response.isRight()) {
+        return {
+          success: true,
+        };
+      } else {
+        return {
+          success: false,
+          // errorMessage: response.error,
+        };
+      }
+    },
   },
   Query: {
     books: async (_, args, ___): Promise<BookCollectionResult[]> => {
@@ -36,7 +65,7 @@ const resolvers = {
         const books = response.value.getValue();
         return books.map((b) => BookMap.toDTO(b));
       } else {
-        throw response.value.error;
+        throw response.value;
       }
     },
   },

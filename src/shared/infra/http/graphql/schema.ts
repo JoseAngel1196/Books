@@ -22,7 +22,23 @@ export const typeDefs = gql`
     errorMessage: String
   }
 
+  type BookError {
+    errorMessage: String!
+  }
+
+  type UpdateBookPayload {
+    success: Boolean!
+    errorMessage: String
+  }
+
   input CreateBookInput {
+    title: String!
+    year: String!
+    bookDescription: String!
+  }
+
+  input UpdateBookInput {
+    bookId: String!
     title: String!
     year: String!
     bookDescription: String!
@@ -30,5 +46,6 @@ export const typeDefs = gql`
 
   type Mutation {
     createBook(input: CreateBookInput): CreateBookPayload!
+    updateBook(input: UpdateBookInput): UpdateBookPayload!
   }
 `;
