@@ -7,8 +7,14 @@ export const typeDefs = gql`
     bookDescription: String
   }
 
+  type BookCollectionResult {
+    title: String
+    year: String
+    bookDescription: String
+  }
+
   type Query {
-    bookById(id: ID!): Book
+    books(offset: String): [BookCollectionResult]!
   }
 
   type CreateBookPayload {
