@@ -4,11 +4,13 @@ import { BookId } from './bookId';
 import { Result } from '../../../shared/core/Result';
 import { Guard } from '../../../shared/core/Guard';
 import { BookTitle } from './bookTitle';
+import { BookYear } from './bookYear';
+import { BookDescription } from './bookDescription';
 
 export interface BookProps {
   title: BookTitle;
-  year: string;
-  bookDescription: string;
+  year: BookYear;
+  bookDescription: BookDescription;
 }
 
 export class Book extends Entity<BookProps> {
@@ -27,17 +29,17 @@ export class Book extends Entity<BookProps> {
     return this.props.title;
   }
 
-  get year(): string {
+  get year(): BookYear {
     return this.props.year;
   }
 
-  get bookDescription(): string {
+  get bookDescription(): BookDescription {
     return this.props.bookDescription;
   }
 
   public static create(props: BookProps, id?: UniqueEntityID): Result<Book> {
     const nullGuard = Guard.againstNullOrUndefinedBulk([
-      { argument: props.bookDescription, argumentName: 'bookDescription' },
+      { argument: props.bookDescription, argumentName: 'description' },
       { argument: props.title, argumentName: 'title' },
       { argument: props.year, argumentName: 'year' },
     ]);

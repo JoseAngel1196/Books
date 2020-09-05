@@ -15,6 +15,11 @@ export class SequelizeBookRepo implements IBookRepo {
   async save(book: Book): Promise<void> {
     const BookModel = this.models.Book;
     const rawSequelizeBook = await BookMap.toPersistence(book);
-    await BookModel.create(rawSequelizeBook);
+
+    try {
+      await BookModel.create(rawSequelizeBook);
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 }

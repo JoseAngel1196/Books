@@ -25,8 +25,16 @@ export class BookTitle extends ValueObject<BookTitleProps> {
       return Result.fail<BookTitle>(nullGuardResult.message);
     }
 
-    const minGuardResult = Guard.againstAtLeast(this.minLength, props.value);
-    const maxGuardResult = Guard.againstAtMost(this.maxLength, props.value);
+    const minGuardResult = Guard.againstAtLeast(
+      this.minLength,
+      props.value,
+      'title'
+    );
+    const maxGuardResult = Guard.againstAtMost(
+      this.maxLength,
+      props.value,
+      'title'
+    );
 
     if (!minGuardResult.succeeded) {
       return Result.fail<BookTitle>(minGuardResult.message);
